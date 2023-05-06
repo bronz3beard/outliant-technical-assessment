@@ -43,68 +43,68 @@ export default function ProductsPage() {
   return (
     <PageTemplate>
       <PageContainer className="pt-24">
-        <div className="flex flex-wrap justify-evenly relative h-96 w-full px-8 my-20">
-          <div className="flex-col w-1/2 relative h-96">
-            <div className="flex justify-between mb-12 w-full">
-              <Title
-                {...{
-                  titleType: "h2",
-                  title: "Products",
-                  className: "text-black font-bold",
-                }}
-              />
-              <Input
-                id="name"
-                name="name"
-                role="textbox"
-                ariaLabel="first name"
-                value={searchFilter}
-                onChange={inputChangeHandler}
-                placeholder="Search for keywords..."
-                className="rounded px-1 border border-black text-base w-1/2"
-              />
-            </div>
-            <SimpleTable
+        <div className="mx-16 flex-col justify-evenly relative w-full">
+          <div className="flex justify-between items-center w-1/2">
+            <Title
               {...{
-                data: filteredProducts ?? [],
-                className: "w-full",
-                columns,
-                tableId: "",
-                deleteRow: false,
-                handleCancelDelete: (event: MouseEvent<HTMLButtonElement>) => {
-                  event.preventDefault()
-                },
-                handleConfirmDelete: (event: MouseEvent<HTMLButtonElement>) => {
-                  event.preventDefault()
-                },
+                titleType: "h1",
+                title: "Products",
+                className: "text-black font-bold",
               }}
-            >
-              {(item) => {
-                const id = useId()
-
-                return (
-                  <Fragment key={id}>
-                    {item ? (
-                      <td className="text-center border-r border-l border-black border-1">
-                        {item}
-                      </td>
-                    ) : (
-                      <td className="flex space-x-2 py-2 justify-center">
-                        <Button {...{ text: "Edit", className: "h-8" }} />
-                        <Button
-                          {...{
-                            text: "Delete",
-                            variant: "secondary",
-                            className: "h-8",
-                          }}
-                        />
-                      </td>
-                    )}
-                  </Fragment>
-                )
-              }}
-            </SimpleTable>
+            />
+            <Input
+              id="name"
+              name="name"
+              role="textbox"
+              ariaLabel="first name"
+              value={searchFilter}
+              onChange={inputChangeHandler}
+              placeholder="Search for keywords..."
+              className="rounded h-12 p-2 border border-black text-base w-1/2"
+            />
           </div>
+        </div>
+        <div className="flex justify-evenly relative h-96 w-full my-12">
+          <SimpleTable
+            {...{
+              data: filteredProducts ?? [],
+              className: "w-1/2",
+              columns,
+              tableId: "",
+              deleteRow: false,
+              handleCancelDelete: (event: MouseEvent<HTMLButtonElement>) => {
+                event.preventDefault()
+              },
+              handleConfirmDelete: (event: MouseEvent<HTMLButtonElement>) => {
+                event.preventDefault()
+              },
+            }}
+          >
+            {(item) => {
+              const id = useId()
+
+              return (
+                <Fragment key={id}>
+                  {item ? (
+                    <td className="text-center border-r border-l border-black border-1">
+                      {item}
+                    </td>
+                  ) : (
+                    <td className="flex space-x-2 py-2 justify-center">
+                      <Button {...{ text: "Edit", className: "h-8" }} />
+                      <Button
+                        {...{
+                          text: "Delete",
+                          variant: "secondary",
+                          className: "h-8",
+                        }}
+                      />
+                    </td>
+                  )}
+                </Fragment>
+              )
+            }}
+          </SimpleTable>
           <UpdateProductsForm />
         </div>
       </PageContainer>

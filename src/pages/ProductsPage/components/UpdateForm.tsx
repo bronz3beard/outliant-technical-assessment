@@ -51,7 +51,7 @@ const UpdateProductsForm = () => {
   const { name, price } = inputValues
 
   return (
-    <div className="bg-theme-bg-dark p-8 w-2/6 text-center">
+    <div className="bg-theme-bg-dark p-8 w-1/3 text-center">
       <Title
         {...{
           titleType: "h3",
