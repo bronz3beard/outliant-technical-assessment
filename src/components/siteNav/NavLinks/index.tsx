@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 const NavLinks = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<any>>(
   (_, _ref) => {
     return (
-      <div className="flex w-full flex-1 flex-col space-y-4 border border-red-500 border-1">
+      <div className="flex w-full flex-1 flex-col space-y-4">
         <div className="overflow-y-auto">
           <ul className="font-medium flex flex-col items-center">
             <li>
