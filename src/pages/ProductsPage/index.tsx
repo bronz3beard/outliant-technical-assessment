@@ -111,8 +111,8 @@ export default function ProductsPage() {
   return (
     <PageTemplate>
       <PageContainer className="pt-24">
-        <div className="mx-20 flex-col justify-evenly relative w-full">
-          <div className="flex justify-between items-center w-1/2">
+        <div className="mx-36 px-4 flex-col justify-evenly relative w-full">
+          <div className="flex space-x-4 items-center w-1/2">
             <Title
               {...{
                 titleType: "h1",
@@ -128,7 +128,7 @@ export default function ProductsPage() {
               value={searchFilter}
               onChange={inputChangeHandler}
               placeholder="Search for keywords..."
-              className="rounded h-12 p-2 border border-black text-base w-1/2"
+              className="rounded h-12 p-2 border border-black text-base w-1/3"
             />
           </div>
         </div>
@@ -139,7 +139,7 @@ export default function ProductsPage() {
               <SimpleTable
                 {...{
                   data: isLoading ? optimisticLoader : filteredProducts,
-                  className: "w-1/2",
+                  className: "w-full",
                   columns,
                   tableId: "",
                   deleteRow: false,
