@@ -1,0 +1,93 @@
+* {
+  /* Specifies the behavior of the 'width' and 'height' properties. */
+  box-sizing: border-box;
+}
+
+html,
+body {
+  @apply text-theme-text;
+  min-height: 100%;
+  @apply bg-theme-bg-light;
+  -webkit-user-drag: none;
+  overscroll-behavior: none;
+  scroll-behavior: smooth;
+}
+/* sets the body height of the browser, so that backgrounds and div heights work correctly. Color and background will almost certainly be altered; they are just placeholders */
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  font-size: 1.4rem;
+  text-rendering: optimizeLegibility;
+}
+
+input[type="range"] {
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+input[type="range"]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+input[type="range"]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+input {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+input:focus:not(:focus:visible) {
+  outline: none !important;
+}
+
+input:focus-within ~ label {
+  @apply transform scale-75 -translate-y-6 text-theme-text left-0 lg:text-lg text-base -top-0.5;
+}
+
+input:focus-within ~ label,
+input:not(:placeholder-shown) ~ label {
+  @apply transform scale-90 -translate-y-6 left-0 top-0.5 text-theme-text;
+}
+
+input:focus-within ~ label {
+  @apply text-theme-text;
+}
+
+textarea {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+textarea:focus:not(:focus:visible) {
+  outline: none !important;
+}
+
+textarea:focus-within ~ label {
+  @apply transform scale-75 -translate-y-6 text-theme-text left-0 lg:text-lg text-base -top-0.5;
+}
+
+textarea:focus-within ~ label,
+textarea:not(:placeholder-shown) ~ label {
+  @apply transform scale-90 -translate-y-6 left-0 top-0.5 text-theme-text;
+}
+
+textarea:focus-within ~ label {
+  @apply text-theme-text;
+}
