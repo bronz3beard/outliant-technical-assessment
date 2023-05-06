@@ -54,3 +54,26 @@ export const formatDate = (
 
   return moment(dateActual).format(DateFormats[format ?? "default"])
 }
+
+export const getDescendantPropObject = (
+  obj: any,
+  description: string
+): string => {
+  const arrList: string[] = description.split(".")
+  let newObj = obj
+
+  if (!arrList.length) {
+    return newObj[description]
+  }
+  // "shift()" Removes the first element from an array and returns it. If the array is empty, undefined.
+  // If the array is empty, undefined is returned and the array is not modified.
+  while (arrList.length) {
+    newObj = newObj[arrList.shift()!] as unknown as string
+  }
+
+  return newObj as string
+}
+
+// check if object is empty.
+export const objectHasAttributes = (obj: Record<string, string>) =>
+  Object.keys(obj).length > 0
