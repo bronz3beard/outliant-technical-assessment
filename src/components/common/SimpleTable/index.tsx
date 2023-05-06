@@ -1,32 +1,44 @@
 import { FC, MouseEvent, ReactNode } from "react"
+import { Products } from "@prisma/client"
 
 import { getDescendantPropObject } from "../../../utils/helpers/commonHelpers"
 import SimpleTableHeader from "./SimpleTableHeader"
 import { ProviderSimpleTable } from "./tableRowContext"
 
 export type RowData = {
-  [index: string]: string
+  [index: string]: string | number
 }
-export type ColumnData = any
+export type ColumnData = { [index: string]: string }
 
+export type ChildData = {
+  value: string
+  id: string
+  column: { [index: string]: string }
+  index: number
+}
 export type SimpleTableProps = {
-  data: RowData[]
+  data: any[]
   columns: ColumnData[]
   tableId?: string
   deleteRow?: boolean
   className: string
-  children: (rowValue: string) => ReactNode
+  children: (rowValue: ChildData) => ReactNode
   handleCancelDelete: (event: MouseEvent<HTMLButtonElement>) => void
   handleConfirmDelete: (event: MouseEvent<HTMLButtonElement>) => void
 }
 
-const getRowProps = (item: RowData, column: ColumnData) => {
+const getRowProps = (item: Products, column: ColumnData, index: number) => {
   const tableDataValue = getDescendantPropObject(
-    item,
+    {
+      name: item.name,
+      price: item.price,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+    },
     column.title.toLowerCase()
   )
-
-  return tableDataValue
+  // TODO:: Look for better option than index.
+  return { value: tableDataValue, id: item.id, column, index }
 }
 
 const SimpleTable: FC<SimpleTableProps> = ({
@@ -36,7 +48,7 @@ const SimpleTable: FC<SimpleTableProps> = ({
   tableId,
   className,
   ...rest
-}: SimpleTableProps) => {
+}) => {
   return (
     <ProviderSimpleTable value={{ ...rest }}>
       <table
@@ -46,12 +58,14 @@ const SimpleTable: FC<SimpleTableProps> = ({
         <SimpleTableHeader columns={columns} />
         <tbody role="rowgroup">
           {data?.length > 0 &&
-            data.map((item: RowData, key: number) => (
+            data.map((item: Products, key: number) => (
               <tr
                 key={key}
                 className="border-r border-l border-b border-black border-1"
               >
-                {columns.map((col, index) => children(getRowProps(item, col)))}
+                {columns.map((col, index) =>
+                  children(getRowProps(item, col, index))
+                )}
               </tr>
             ))}
         </tbody>

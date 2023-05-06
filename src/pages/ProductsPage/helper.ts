@@ -1,11 +1,13 @@
+import { Products } from "@prisma/client"
+
 import { FormDataItem, InputValues } from "../../hooks/useForm"
 
 export const conversationMatchesSearch = <
-  T extends { [index: string]: string }
+  T extends { name: string; price: number }
 >(
-  arrayList: T[] | null,
+  arrayList: T[],
   searchValue: string
-): T[] | undefined => {
+): T[] => {
   if (arrayList?.length) {
     return arrayList?.filter((item: T) => {
       const name = item.name
@@ -27,6 +29,8 @@ export const conversationMatchesSearch = <
       }
       return false
     })
+  } else {
+    return arrayList
   }
 }
 
@@ -35,14 +39,16 @@ export interface ProductsFormData extends FormDataItem {
   price: InputValues
 }
 
-export const getFormInputValues = (): ProductsFormData => ({
+export const getFormInputValues = (
+  editData: Products | undefined
+): ProductsFormData => ({
   name: {
-    value: "",
+    value: !editData?.name ? "" : editData.name,
     label: "Name",
     placeholder: "Name",
   },
   price: {
-    value: "",
+    value: !editData?.price ? "" : `${editData.price}`,
     label: "Price",
     placeholder: "Price",
   },

@@ -18,7 +18,7 @@ const SimpleTableHeader: FC<SimpleTableHeaderProps> = ({
       className={`${className} text-base text-theme-button uppercase bg-theme-bg-light dark:bg-theme-bg-dark dark:text-theme-button`}
     >
       <tr className="text-base text-theme-button uppercase bg-theme-bg-light dark:bg-theme-bg-dark dark:text-theme-button">
-        {columns.map(({ id, title, tableDataStyles }) => {
+        {columns.map(({ id, title }) => {
           return (
             title && (
               <th
@@ -27,7 +27,6 @@ const SimpleTableHeader: FC<SimpleTableHeaderProps> = ({
                 className="text-center px-6 py-4 border-r border-l border-t border-black border-1"
                 style={{
                   ...headerStyle,
-                  ...tableDataStyles,
                 }}
               >
                 {title}

@@ -8,7 +8,7 @@ let authAxiosInstance: AxiosInstance | undefined
 // If we need to make requests to 3rd party apis we can use the standard axios instance.
 const makeAuthAxios = async () => {
   authAxiosInstance = Axios.create({
-    baseURL: import.meta.env.VITE_PUBLIC_BACKEND_URL,
+    // baseURL: import.meta.env.VITE_PUBLIC_BACKEND_URL,
     headers: {
       "X-Requested-With": "XMLHttpRequest",
     },
