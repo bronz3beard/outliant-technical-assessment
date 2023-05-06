@@ -43,7 +43,7 @@ export default function ProductsPage() {
   return (
     <PageTemplate>
       <PageContainer className="pt-24">
-        <div className="mx-16 flex-col justify-evenly relative w-full">
+        <div className="mx-20 flex-col justify-evenly relative w-full">
           <div className="flex justify-between items-center w-1/2">
             <Title
               {...{
