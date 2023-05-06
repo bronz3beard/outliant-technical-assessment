@@ -6,13 +6,15 @@ import SimpleTableHeader from "./SimpleTableHeader"
 import { ProviderSimpleTable } from "./tableRowContext"
 
 export type RowData = {
-  [index: string]: string
+  [index: string]: string | number
 }
-export type ColumnData = any
+export type ColumnData = { [index: string]: string }
 
 export type ChildData = {
   value: string
   id: string
+  column: { [index: string]: string }
+  index: number
 }
 export type SimpleTableProps = {
   data: any[]
@@ -25,13 +27,18 @@ export type SimpleTableProps = {
   handleConfirmDelete: (event: MouseEvent<HTMLButtonElement>) => void
 }
 
-const getRowProps = (item: Products, column: ColumnData) => {
+const getRowProps = (item: Products, column: ColumnData, index: number) => {
   const tableDataValue = getDescendantPropObject(
-    item,
+    {
+      name: item.name,
+      price: item.price,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+    },
     column.title.toLowerCase()
   )
-
-  return { value: tableDataValue, id: item.id }
+  // TODO:: Look for better option than index.
+  return { value: tableDataValue, id: item.id, column, index }
 }
 
 const SimpleTable: FC<SimpleTableProps> = ({
@@ -56,7 +63,9 @@ const SimpleTable: FC<SimpleTableProps> = ({
                 key={key}
                 className="border-r border-l border-b border-black border-1"
               >
-                {columns.map((col, _index) => children(getRowProps(item, col)))}
+                {columns.map((col, index) =>
+                  children(getRowProps(item, col, index))
+                )}
               </tr>
             ))}
         </tbody>

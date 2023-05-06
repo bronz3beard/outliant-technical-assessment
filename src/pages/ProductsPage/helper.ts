@@ -1,3 +1,5 @@
+import { Products } from "@prisma/client"
+
 import { FormDataItem, InputValues } from "../../hooks/useForm"
 
 export const conversationMatchesSearch = <
@@ -37,14 +39,16 @@ export interface ProductsFormData extends FormDataItem {
   price: InputValues
 }
 
-export const getFormInputValues = (): ProductsFormData => ({
+export const getFormInputValues = (
+  editData: Products | undefined
+): ProductsFormData => ({
   name: {
-    value: "",
+    value: !editData?.name ? "" : editData.name,
     label: "Name",
     placeholder: "Name",
   },
   price: {
-    value: "",
+    value: !editData?.price ? "" : `${editData.price}`,
     label: "Price",
     placeholder: "Price",
   },

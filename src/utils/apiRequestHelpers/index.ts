@@ -83,12 +83,11 @@ export const multiGetRequest = async <Resp>(
 
 export const singlePostRequest = async <Req, Resp>(
   apiUrl: string,
-  params: Req,
-  config?: AxiosRequestConfig
+  params: Req
 ): Promise<AxiosResponse<Resp>> => {
   const request = await getAuthAxiosAsync()
 
-  return request.post<Resp>(apiUrl, params, config).catch((error: any) => {
+  return request.post<Resp>(apiUrl, params).catch((error: any) => {
     throw error
   })
 }

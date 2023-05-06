@@ -32,7 +32,7 @@ enum DateFormats {
 type DateFormatsKey = keyof typeof DateFormats
 
 export const formatDate = (
-  DateTimeStamp: number | string | Moment,
+  DateTimeStamp: number | string | Moment | Date,
   format?: DateFormatsKey,
   withUtc: boolean = false,
   isUnixTime = false
