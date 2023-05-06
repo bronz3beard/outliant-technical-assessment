@@ -16,6 +16,7 @@
 
     /* Linting */
     "strict": true,
+    "allowJs": true,
     "esModuleInterop": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -23,7 +24,18 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "**/*.ts", "**/*.tsx", "tailwind.config.js"],
+  "include": [
+    "src",
+    "**/*.ts",
+    "**/*.tsx",
+    "tailwind.config.js",
+    "server/index.js",
+    "server/modules/serviceLayer/productsController.mjs",
+    "server/modules/middleware/validateProducts.mjs",
+    "server/modules/middleware/errorMiddleware.js",
+    "server/modules/dataAccessLayer/productsRepository.mjs",
+    "server/lib/prismaClient.mjs"
+  ],
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

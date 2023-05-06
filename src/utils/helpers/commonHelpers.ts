@@ -34,7 +34,7 @@ type DateFormatsKey = keyof typeof DateFormats
 export const formatDate = (
   DateTimeStamp: number | string | Moment,
   format?: DateFormatsKey,
-  withUtc = null,
+  withUtc: boolean = false,
   isUnixTime = false
 ) => {
   const utcDate = moment.utc(DateTimeStamp).format("YYYY-MM-DD HH:mm:ss")

@@ -1,44 +1,54 @@
-import {
-  ChangeEvent,
-  Fragment,
-  MouseEvent,
-  useId,
-  useMemo,
-  useState,
-} from "react"
+import { ChangeEvent, Fragment, MouseEvent, useState } from "react"
+import { Products } from "@prisma/client"
 
 import { Button } from "../../components/common/Button"
 import Input from "../../components/common/Input"
 import SimpleTable from "../../components/common/SimpleTable"
+import {
+  // SkeletonLoader,
+  optimisticLoaderArray,
+} from "../../components/designSystem/Loaders"
 import { Title } from "../../components/designSystem/Title"
 import PageContainer from "../../components/layout/PageContainer"
 import PageTemplate from "../../components/layout/PageTemplate"
+import useSWRAppData from "../../hooks/useSWRAppData"
+import { simpleFetcher } from "../../utils/apiRequestHelpers"
 import UpdateProductsForm from "./components/UpdateForm"
 import { conversationMatchesSearch } from "./helper"
-
-const data = [
-  {
-    name: "Lorem ipsum",
-    price: "Lorem ipsum",
-    action: "",
-  },
-  { name: "Lorem ipsum", price: "Lorem ipsum", action: "" },
-  { name: "Lorem ipsum", price: "Lorem ipsum", action: "" },
-]
 
 const columns = [{ title: "Name" }, { title: "Price" }, { title: "Action" }]
 
 export default function ProductsPage() {
   const [searchFilter, setSearchFilter] = useState<string>("")
 
+  const {
+    data,
+    // error,
+    isLoading,
+  } = useSWRAppData<{ success: boolean; products: Products[] }>(
+    "/api/products",
+    simpleFetcher,
+    {
+      // refreshInterval: 1000,
+    }
+  )
+
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget
     setSearchFilter(value)
   }
-  const filteredProducts = useMemo(
-    () => conversationMatchesSearch(data, searchFilter),
-    [data, searchFilter]
+  if (!data?.products) {
+    return <div>Loading...</div>
+  }
+  const filteredProducts = conversationMatchesSearch(
+    data?.products.map(({ name, price, id }) => ({ name, price, action: id })),
+    searchFilter
   )
+  const optimisticLoader = optimisticLoaderArray(7).map((_, index) => ({
+    id: index,
+    name: "Loading...",
+    price: 0,
+  }))
 
   return (
     <PageTemplate>
@@ -67,7 +77,7 @@ export default function ProductsPage() {
         <div className="flex justify-evenly relative h-96 w-full my-12">
           <SimpleTable
             {...{
-              data: filteredProducts ?? [],
+              data: isLoading ? optimisticLoader : filteredProducts,
               className: "w-1/2",
               columns,
               tableId: "",
@@ -80,17 +90,19 @@ export default function ProductsPage() {
               },
             }}
           >
-            {(item) => {
-              const id = useId()
-
+            {({ value, id }) => {
               return (
                 <Fragment key={id}>
-                  {item ? (
-                    <td className="text-center border-r border-l border-black border-1">
-                      {item}
+                  {value && (
+                    <td
+                      key={id}
+                      className="text-center border-r border-l border-black border-1"
+                    >
+                      {value}
                     </td>
-                  ) : (
-                    <td className="flex space-x-2 py-2 justify-center">
+                  )}
+                  {value === id && (
+                    <td key={id} className="flex space-x-2 py-2 justify-center">
                       <Button {...{ text: "Edit", className: "h-8" }} />
                       <Button
                         {...{

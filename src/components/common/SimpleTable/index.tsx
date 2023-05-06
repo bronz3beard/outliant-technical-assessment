@@ -1,4 +1,5 @@
 import { FC, MouseEvent, ReactNode } from "react"
+import { Products } from "@prisma/client"
 
 import { getDescendantPropObject } from "../../../utils/helpers/commonHelpers"
 import SimpleTableHeader from "./SimpleTableHeader"
@@ -9,24 +10,28 @@ export type RowData = {
 }
 export type ColumnData = any
 
+export type ChildData = {
+  value: string
+  id: string
+}
 export type SimpleTableProps = {
-  data: RowData[]
+  data: any[]
   columns: ColumnData[]
   tableId?: string
   deleteRow?: boolean
   className: string
-  children: (rowValue: string) => ReactNode
+  children: (rowValue: ChildData) => ReactNode
   handleCancelDelete: (event: MouseEvent<HTMLButtonElement>) => void
   handleConfirmDelete: (event: MouseEvent<HTMLButtonElement>) => void
 }
 
-const getRowProps = (item: RowData, column: ColumnData) => {
+const getRowProps = (item: Products, column: ColumnData) => {
   const tableDataValue = getDescendantPropObject(
     item,
     column.title.toLowerCase()
   )
 
-  return tableDataValue
+  return { value: tableDataValue, id: item.id }
 }
 
 const SimpleTable: FC<SimpleTableProps> = ({
@@ -36,7 +41,7 @@ const SimpleTable: FC<SimpleTableProps> = ({
   tableId,
   className,
   ...rest
-}: SimpleTableProps) => {
+}) => {
   return (
     <ProviderSimpleTable value={{ ...rest }}>
       <table
@@ -46,12 +51,12 @@ const SimpleTable: FC<SimpleTableProps> = ({
         <SimpleTableHeader columns={columns} />
         <tbody role="rowgroup">
           {data?.length > 0 &&
-            data.map((item: RowData, key: number) => (
+            data.map((item: Products, key: number) => (
               <tr
                 key={key}
                 className="border-r border-l border-b border-black border-1"
               >
-                {columns.map((col, index) => children(getRowProps(item, col)))}
+                {columns.map((col, _index) => children(getRowProps(item, col)))}
               </tr>
             ))}
         </tbody>

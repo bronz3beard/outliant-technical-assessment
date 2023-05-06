@@ -11,14 +11,9 @@ type FormErrorTemplate = {
 }
 
 const UpdateProductsForm = () => {
-  const {
-    errors,
-    formData: inputValues,
-    handleChange,
-    handleSubmit,
-  } = useForm({
+  const { formData: inputValues, handleChange } = useForm({
     initialValues: getFormInputValues(),
-    async onSubmit({ formData, error, setErrors }) {
+    async onSubmit({ error }) {
       if (error && objectHasAttributes(error)) {
         return // cancel the submit until errors are fixed
       } else {

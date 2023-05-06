@@ -52,13 +52,11 @@ const Photo = ({
       const targetCurrent = imgRef.current
 
       // check event listener is available on targetElement, TODO:: maybe add assert here?
-      if (!targetCurrent?.getBoundingClientRect) {
-        return undefined
-      }
-
-      const rect = targetCurrent?.getBoundingClientRect()
-      if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-        setIsVisible(true)
+      if (targetCurrent?.getBoundingClientRect) {
+        const rect = targetCurrent?.getBoundingClientRect()
+        if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+          setIsVisible(true)
+        }
       }
     }
 

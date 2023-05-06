@@ -1,11 +1,11 @@
 import { FormDataItem, InputValues } from "../../hooks/useForm"
 
 export const conversationMatchesSearch = <
-  T extends { [index: string]: string }
+  T extends { name: string; price: number }
 >(
-  arrayList: T[] | null,
+  arrayList: T[],
   searchValue: string
-): T[] | undefined => {
+): T[] => {
   if (arrayList?.length) {
     return arrayList?.filter((item: T) => {
       const name = item.name
@@ -27,6 +27,8 @@ export const conversationMatchesSearch = <
       }
       return false
     })
+  } else {
+    return arrayList
   }
 }
 

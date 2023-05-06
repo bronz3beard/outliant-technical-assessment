@@ -34,7 +34,7 @@ type DefaultOptions = {
 }
 
 const useForm = (options: DefaultOptions) => {
-  const { initialValues, onSubmit, onHandleCancel, validate } = options
+  const { initialValues, onSubmit, validate } = options
   const [formData, setFormData] = useState<FormDataItem>(initialValues)
 
   // currently errors are not being used but they can be in future.
